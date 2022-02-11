@@ -36,7 +36,6 @@ for e in $(echo "ETH_FROM ETH_KEYSTORE ETH_PASSWORD ETH_GAS ETH_RPC_URL"); do
     }
 done
 
-ETH_PASSWORD="$ETH_PASSWORD"
 ETH_RPC_ACCOUNTS=yes
 printenv | grep -E '^ETH_'
 
