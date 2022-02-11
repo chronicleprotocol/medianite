@@ -43,7 +43,7 @@ For testing various Ethereum accounts have been created. They live in this repos
 
 The script `ethaccounts.sh` can be used to decrypt and store these accounts locally in the `.testing_keytsore` folder, and they can be used for running integration tests via `test.sh`.
 
-You will need to have access to the master (gpg) key. It is also encrypted and stored in the repo. It can be shared over secure channels. Once imported, you should be able to encrypt or decrypt and secret file stored anywhere in this repo.
+You will need to have access to the master (gpg) key. It is also encrypted and stored in the repo. It can be shared over secure channels. Once imported, you should be able to encrypt or decrypt any secret file stored anywhere in this repo.
 
 
 
