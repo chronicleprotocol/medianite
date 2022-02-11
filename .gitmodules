@@ -1,0 +1,3 @@
+[submodule "template/median"]
+	path = template/median
+	url = https://github.com/makerdao/median
