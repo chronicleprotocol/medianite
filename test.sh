@@ -2,11 +2,12 @@
 
 set -e
 
+testing_keystore=.testing_keystore
+
 # Make sure we're not testing anything in live
 chain=$(seth chain 2>/dev/null) || {
-    echo "Not connected, please run:"
-    echo "  dapp testnet --accounts n (where n is an odd number)"
-    echo ""
+    echo "Not connected. If you're trying to run a local test, please do:"
+    echo "  dapp testnet"; echo
     exit 1
 }
 
@@ -15,15 +16,14 @@ chain=$(seth chain 2>/dev/null) || {
     exit 1
 }
 
-
 [[ -z "$MEDIAN" ]] && {
-    echo "To conitnue, you need to do"
+    echo "To continue, you need to do"
     echo "  export MEDIAN=<Address of median contract>"
     exit 1
 }
 
 [[ -z "$PAIR" ]] && {
-    echo "To conitnue, you need to do"
+    echo "To continue, you need to do"
     echo "  export PAIR=<Currency pair>"
     echo "  E.g. export PAIR=ETHUSD"
     exit 1
@@ -52,17 +52,31 @@ function hash {
 
 function join { local IFS=","; echo "$*"; }
 
-mapfile -t accounts < <(ethsign ls | grep -v $ETH_FROM | awk '{print $1}')
+# NOTE(james) The accounts used in this test are oracles. The poke() method is
+# called via ETH_FROM.
+mapfile -t accounts < <(ETH_KEYSTORE=$testing_keystore ethsign ls | grep -v $ETH_FROM | awk '{print $1}')
 
 echo "Median: $MEDIAN"
 echo "Sending from: $ETH_FROM"
+
+if [ ! -z "$SET_BAR" ]; then
+    echo "Setting bar to $SET_BAR"
+    seth send $MEDIAN "setBar(uint256)" $(seth --to-uint256 $SET_BAR)
+    accounts=("${accounts[@]:0:$SET_BAR}")
+fi
+
+# In this case, we assume that SET_BAR has been run once already, and we're
+# just saving gas costs (like on subsequent runs).
+if [ ! -z "$BAR" ]; then
+    accounts=("${accounts[@]:0:$BAR}")
+fi
 
 if [ "$1" = "lift-accounts" ]; then
     for acc in "${accounts[@]}"; do
         allaccs+=("${acc#0x}")
     done
-    echo "lift()ing account $acc..."
-    seth send "$median" 'lift(address[] memory)' "[$(join "${allaccs[@]}")]"
+    echo "Lifting accounts: ${allaccs[@]}"
+    seth send "$MEDIAN" 'lift(address[] memory)' "[$(join "${allaccs[@]}")]"
     exit 0
 fi
 
@@ -74,10 +88,11 @@ ts=1549168920 # dapp testnet
 }
 empty_pass='template/median/empty'
 for acc in "${accounts[@]}"; do
+    echo "    $acc"
     price=$((250 + i))
     i=$((i + 1))
     hash=$(hash "$PAIR" "$price" "$ts")
-    sig=$(ETH_KEYSTORE='.testing_keystore' ethsign msg --from "$acc" --data "$hash" --passphrase-file "$empty_pass")
+    sig=$(ETH_KEYSTORE=$testing_keystore ethsign msg --from "$acc" --data "$hash" --passphrase-file "$empty_pass")
     res=$(sed 's/^0x//' <<< "$sig")
     r=${res:0:64}
     s=${res:64:64}
