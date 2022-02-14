@@ -4,6 +4,7 @@ set -e
 
 script_path=$(dirname $0)
 template="$script_path/ext.sol"
+make_template="$script_path/ext.Makefile"
 deploy_home='deploy'
 median_source='template/median'
 
@@ -43,7 +44,9 @@ echo "=============================="
 cat "$deploy_dir/median/src/median.sol" | tail -n $(cat "$template" | wc -l | xargs)
 echo "=============================="; echo
 
-rm -fr "$deploy_dir/median/lib/ds-test"
-git clone https://github.com/dapphub/ds-test "$deploy_dir/median/lib/ds-test"
+cat "$make_template" >> "$deploy_dir/median/Makefile"
+pushd "$deploy_dir/median"
+make dappinit
+popd
 
 find "$deploy_dir" | grep -v '.git'
