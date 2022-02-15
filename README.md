@@ -61,15 +61,20 @@ export ETH_RPC_URL=http://access/to/chain/like/infura
 export ETH_KEYSTORE=~/path/to/ethereum/keystore
 export ETH_FROM=0xDEADBEEF
 ```
-As stated above, you'll be setting these variables to whatever account you need to access the contract on the appropriate chain. Once the above is done, and assuming the contract is already deployed, you can now run tests. At a minimum you need to specify the `PAIR`.
+As stated above, you'll be setting these variables to whatever account you need to access the contract on the appropriate chain. Once the above is done, and assuming the contract is already deployed, you can now run tests. Almost.
+
+You need to set the *bar* for the contract, and also *lift* the oracle test accounts. As a convenience, `test.sh` can do this for you. After deploying the contract, run `test.sh` once with the following parameters to initialize the contract for testing:
 
 ```
-PAIR=ETHUSD ./test.sh
+MEDIAN=0x123abc PAIR=ETHUSD SET_BAR=15 ./test.sh lift-accounts
 ```
-There are 15 addresses provided for oracles. By default the test will use all of them. If you want to run a smaller set of oracles, you can specify that in the `SET_BAR` variable:
+
+(Obviously, update `PAIR` and `SET_BAR` above to whatever is appropriate for your test.) 
+
+Now you're ready to actually test `poke()`.
 
 ```
-SET_BAR=5 PAIR=ETHUSD ./test.sh
+MEDIAN=0x123abc PAIR=ETHUSD ./test.sh
 ```
 
 #### Walkthrough: Local testnet
@@ -108,13 +113,13 @@ pushd deploy/arbitrum-ETHUSD/median && \
 
 The above command will output a contract address for the deployed median, e.g. `0x87D89A7b758dE3a1bc37E2144c30CE74D203Da22`. You'll need to set (or pass) this to `test.sh`.
 
-Final step: you need to lift your test oracle acocunts. These will be pulled from the locally generated `.testing_keystore` folder.
+Final step, do some contract initialization, like `lift()`ing accounts. The accounts will be pulled from the locally generated `.testing_keystore` folder.
 
 ```
-MEDIAN=0x87D89A7b758dE3a1bc37E2144c30CE74D203Da22 PAIR=ETHUSD ./test.sh lift-accounts
+MEDIAN=0x87D89A7b758dE3a1bc37E2144c30CE74D203Da22 SET_BAR=15 PAIR=ETHUSD ./test.sh lift-accounts
 ```
 
-Now you're ready to run the test:
+Do the test.
 
 ```
 MEDIAN=0x87D89A7b758dE3a1bc37E2144c30CE74D203Da22 PAIR=ETHUSD ./test.sh
