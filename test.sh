@@ -82,8 +82,8 @@ fi
 
 echo "Oracles signing prices..."
 i=1
-ts=1549168920 # dapp testnet
-[[ ! -z "$AGE" ]] && {
+ts="$AGE"
+[[ -z "$AGE" ]] && {
     ts=$(date -u +"%s")
 }
 empty_pass='template/median/empty'
