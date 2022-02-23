@@ -39,4 +39,28 @@ GAS USED: 173143
 
 ## Optimism mainnet
 
-TODO
+### Test deploy
+
+*For cost analysis. May want to do a "clean" deploy for production.*
+
+Contract [0x152598809FB59db55cA76f89a192Fb23555531D8](https://optimistic.etherscan.io/address/0x152598809FB59db55cA76f89a192Fb23555531D8)
+
+#### Deploy
+
+[0x72f80340481c37994cbeab9f66b07a1bc97c77d1e2df5a209c45cc5368e3ac72](https://optimistic.etherscan.io/tx/0x72f80340481c37994cbeab9f66b07a1bc97c77d1e2df5a209c45cc5368e3ac72)
+
+Cost **$39.16** 
+
+#### lift() fifteen feeds
+
+[0x64975f126e81dcd226b1558e015e8c5b34a83157746000c5497e6297a0db4a18](https://optimistic.etherscan.io/tx/0x64975f126e81dcd226b1558e015e8c5b34a83157746000c5497e6297a0db4a18)
+
+Cost: **$2.73**
+
+#### setBar() to 15
+
+[0x7e5a8a05757919dfc0051e11101b12f08da636ff101f813e3331cec4009dfd1b](https://optimistic.etherscan.io/tx/0x7e5a8a05757919dfc0051e11101b12f08da636ff101f813e3331cec4009dfd1b)
+
+Cost: **$1.13**
+
+
