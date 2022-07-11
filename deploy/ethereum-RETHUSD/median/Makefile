@@ -6,3 +6,4 @@ dappinit:
 	git clone https://github.com/dapphub/ds-test lib/ds-test
 	rm -fr lib/ds-thing
 	git clone https://github.com/dapphub/ds-thing lib/ds-thing
+	(pushd lib/ds-thing && dapp update && popd)
