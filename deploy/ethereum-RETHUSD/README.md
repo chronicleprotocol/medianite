@@ -2,17 +2,18 @@
 
 ## Mainnet deploy
 
-TBD
+`Circuit` [0xa3105dee5ec73a7003482b1a8968dc88666f3589](https://etherscan.io/address/0xa3105dee5ec73a7003482b1a8968dc88666f3589#code)
 
 ## Goerli deploy
 
 [0x7eEE7e44055B6ddB65c6C970B061EC03365FADB3](https://goerli.etherscan.io/address/0x7eEE7e44055B6ddB65c6C970B061EC03365FADB3#code)
 
-The `Circuit` contract
+`Circuit` [0x1830b6f64f9b7d21e419bf3806d5fbe9f5476e42](https://goerli.etherscan.io/address/0x1830b6f64f9b7d21e419bf3806d5fbe9f5476e42#code)
 
-[0x1830b6f64f9b7d21e419bf3806d5fbe9f5476e42](https://goerli.etherscan.io/address/0x1830b6f64f9b7d21e419bf3806d5fbe9f5476e42#code)
 
-which is a simple DSValue used to check whether the value returned from the RocketPool contract is within a range (percent) of the market value of `rETH`. The value is set initially to [10%](https://goerli.etherscan.io/tx/0x284a34725fcb466dd7ac64585163f48aab95ff08dfc45772f05f3b73b36b3a77).
+## Notes
+
+The `Circuit` contract is a simple DSValue used to check whether the value returned from the RocketPool contract is within a range (percent) of the market value of `rETH`. The value is set initially to [10%](https://etherscan.io/tx/0xad235a9414652c0d4d7baad1f3395564968dda769ba18591fc99a07f23790e6d).
 
 NOTE the contract above allows for 5 decimal places of precision. E.g. 
 
