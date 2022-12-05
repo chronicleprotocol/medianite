@@ -44,6 +44,23 @@ echo "=============================="
 cat "$deploy_dir/median/src/median.sol" | tail -n $(cat "$template" | wc -l | xargs)
 echo "=============================="; echo
 
+echo "
+# Median${pair}
+
+### Mainnet
+
+Median: [TODO: Mainnet address](https://etherscan.io/address/TODO)
+
+OSM: [TODO: OSM address](https://etherscan.io/address/TODO)
+
+### Testnet
+
+Median: [TODO: Testnet address](https://goerli.etherscan.io/address/TODO)
+
+OSM: [TODO: OSM address](https://goerli.etherscan.io/address/TODO)
+
+" > "$deploy_dir/README.md"
+
 cat "$make_template" >> "$deploy_dir/median/Makefile"
 pushd "$deploy_dir/median"
 make dappinit
